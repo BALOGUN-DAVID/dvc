@@ -355,9 +355,7 @@ def test_experiments_push_queued_empty(dvc, scm, mocker):
     assert cli_args.func == CmdExperimentsPush
 
     cmd = cli_args.func(cli_args)
-    mocker.patch(
-        "dvc.repo.experiments.push.push", return_value={"queued": []}
-    )
+    mocker.patch("dvc.repo.experiments.push.push", return_value={"queued": []})
 
     assert cmd.run() == 0
 
