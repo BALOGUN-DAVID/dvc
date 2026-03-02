@@ -343,6 +343,25 @@ def test_experiments_push_queued(dvc, scm, mocker):
     )
 
 
+def test_experiments_push_queued_empty(dvc, scm, mocker):
+    cli_args = parse_args(
+        [
+            "experiments",
+            "push",
+            "origin",
+            "--queued",
+        ]
+    )
+    assert cli_args.func == CmdExperimentsPush
+
+    cmd = cli_args.func(cli_args)
+    mocker.patch(
+        "dvc.repo.experiments.push.push", return_value={"queued": []}
+    )
+
+    assert cmd.run() == 0
+
+
 def test_experiments_pull(dvc, scm, mocker):
     cli_args = parse_args(
         [
